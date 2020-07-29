@@ -12,11 +12,10 @@
 <link rel="stylesheet" href="{% static '/css/geekapp.css' %}">
     <title>GeekMovies</title>
 
-
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-white">
-    <a class="navbar-brand" href="#">GeekMovies</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-light text-white">
+    <a style="" class="navbar-brand" href="{% url 'geekapp:home' %}"><span ><span style="font-size:27px; background-color: white;color:#fa7400">GEEK</span><span style="font-size:27px;background-color: white;color:#3faaf0;">MOVIES</span> </span> </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -24,39 +23,39 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="{% url 'geekapp:home' %}">Home <span class="sr-only">(current)</span></a>
+          <a style="color:black " class="nav-link" href="{% url 'geekapp:home' %}">Home <span class="sr-only">(current)</span></a>
         </li>
 
 
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'geekapp:add_movies' %}">Add Movie</a>
+          <a style="color:black " class="nav-link" href="{% url 'geekapp:add_movies' %}">Add Movie</a>
         </li>
         {% if user.is_authenticated %}
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a style="color:black "class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{user.username}}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">My Profile</a>
+            <a style="color:black " class="dropdown-item" href="#">My Profile</a>
 
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{% url "accounts:logout" %}">Logout</a>
+            <a style="color:black " class="dropdown-item" href="{% url "accounts:logout" %}">Logout</a>
           </div>
         </li>
         {% else %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
+          <a style="color:black " class="nav-link" href="{% url 'accounts:login' %}">Login</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'accounts:register' %}">Register</a>
+          <a style="color:black " class="nav-link" href="{% url 'accounts:register' %}">Register</a>
         </li>
         {%endif%}
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
+        </li> -->
       </ul>
       <form class="form-inline my-2 my-lg-0" method="GET" action="{% url "geekapp:home" %}">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="title">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search Movies" aria-label="Search" name="title">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
     </div>

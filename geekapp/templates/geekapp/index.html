@@ -2,7 +2,14 @@
 
 
 {% block content  %}
-
+<style media="screen">
+  .center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 55%;
+}
+</style>
 <div class="container">
   <br>
  <div class="card" id="backdrop">
@@ -10,14 +17,15 @@
      <div class="row">
        {% for movie in movies %}
        <div class="col-md-4">
+         <br>
          <div class="card">
            <div class="card-body">
-             <img src="{{movie.image}}" alt="" class="img">
+             <img class="center"src="{{movie.image}}" alt="" class="img">
              <h3 class="text-center">{{movie.name}}</h3>
              <div class="text-center">
-               <i>{{movie.release_date}}</i>
+               <i>Release Date: {{movie.date}}</i>
              </div>
-             <a href="{% url 'geekapp:detail' movie.id %}">read more</a>
+             <a href="{% url 'geekapp:detail' movie.id %}">view more</a>
            </div>
          </div>
        </div>
