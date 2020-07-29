@@ -9,7 +9,14 @@
         {% csrf_token %}
 
         {{form | crispy}}
+        <!-- <input type="range" id="rangeInput"
+        name="rating" min="0" max="10" value="0" step="0.5" oninput="amount.value=rangeInput.value">
 
+        <output name="amount" id="amount " for="rating" >0</output> -->
+        {% if error %}
+            <strong style="color:red">{{error}}</strong>
+        {% endif %}
+        <br>
         <input type="submit" name="" value="Save Changes" class="btn btn-dangers">
 
 

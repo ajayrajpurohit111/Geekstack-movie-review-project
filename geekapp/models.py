@@ -9,7 +9,7 @@ class Movie(models.Model):
     cast=models.CharField(max_length=300)
     plot=models.CharField(max_length=400)
     description=models.TextField(max_length=5000)
-    # relase_date=models.DateField()
+    relase_date=models.DateField()
     averageRating=models.FloatField(default=0)
     image=models.URLField( default=None,null=True,max_length=400)
     video=EmbedVideoField(null=True,blank=True)

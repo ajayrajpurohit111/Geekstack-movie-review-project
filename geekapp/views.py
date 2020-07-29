@@ -3,22 +3,40 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from .models import Movie
 from .forms import *
+from django.db.models import Avg
 # Create your views here.
+
 def home(request):
-    allMovies=Movie.objects.all()
+    query=request.GET.get("title")
+    allMovies=None
+    if query:
+        allMovies = Movie.objects.filter(name__icontains=query)
+    else:
+        allMovies=Movie.objects.all()
+
+
+
     context={
-    "movies":allMovies
+    "movies":allMovies,
     }
     return render(request,'geekapp/index.html',context)
 
 def detail(request, id):
+
     movie=Movie.objects.get(id=id)
     reviews=Review.objects.filter(movie=id).order_by("-comment")
+    average=reviews.aggregate(Avg("rating"))["rating__avg"]
+    if average==None:
+        average=0
+    average=round(average,2)
     context={
     "movie":movie,
-    "reviews":reviews
+    "reviews":reviews,
+    "average":average
     }
+
     return render(request,'geekapp/details.html',context)
+
 
 def add_movies(request):
     if request.user.is_authenticated:
@@ -93,12 +111,28 @@ def edit_review(request,movie_id,review_id):
                 form =ReviewForm(request.POST,instance=review)
                 if form.is_valid():
                     data=form.save(commit=False)
-                    data.save()
-                    return redirect("geekapp:detail",movie_id)
+                    if( data.rating > 10) or (data.rating < 0):
+                        error= "Please select between 0 to 10 !"
+                        return render(request,'geekapp/editreview.html',{"error":error,"form":form})
+                    else:
+                        data.save()
+                        return redirect("geekapp:detail",movie_id)
+
+
             else:
                 form =ReviewForm(instance=review)
                 return render(request,"geekapp/editreview.html",{"form":form})
         else:
             return redirect("geekapp:detail",movie_id)
+    else:
+        return redirect("accounts:login")
+def delete_review(request,movie_id,review_id):
+    if request.user.is_authenticated:
+        movie=Movie.objects.get(id=movie_id)
+        review=Review.objects.get(movie=movie,id=review_id)
+
+        if request.user == review.user:
+            review.delete()
+        return redirect("geekapp:detail",movie_id)
     else:
         return redirect("accounts:login")
